@@ -53,7 +53,7 @@ for i in range (500):
 for ii in range (5):
     try:
         print("**********0")
-        i=random.randint(0,2500)
+        i=random.randint(0,25)
         print("**********",i)
         arr1 = face_recognition.load_image_file(list_of_files[i])
         test_face_encoding1  = face_recognition.face_encodings(arr1)[0]
