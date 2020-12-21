@@ -52,9 +52,12 @@ for i in range (500):
 #        print("list_of_files ",j," :",list_of_files[j])
 for ii in range (5):
     try:
+        print("**********0")
         i=random.randint(0,2500)
+        print("**********",i)
         arr1 = face_recognition.load_image_file(list_of_files[i])
         test_face_encoding1  = face_recognition.face_encodings(arr1)[0]
+        print("**********1")
     except Exception:
         continue
     else:
@@ -63,8 +66,10 @@ for ii in range (5):
                 j=random.randint(0,2500)
                 arr3 = face_recognition.load_image_file(list_of_files[j])
                 test_face_encoding2  = face_recognition.face_encodings(arr3)[0]
+                print("**********2")
             except Exception:
-                continue 
+                print(Exception)
+                continue
             else:
                     dis = embedding_distance(test_face_encoding1, test_face_encoding2)
                     if int(i/5)==int(j/5):
