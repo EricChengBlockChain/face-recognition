@@ -3,7 +3,7 @@ import cv2
 import numpy as np
 import os
 import glob
-
+import random
 dirname = os.path.dirname(__file__)
 #print (dirname)
 number_files = 0
