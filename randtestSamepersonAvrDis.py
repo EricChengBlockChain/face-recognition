@@ -32,7 +32,7 @@ samePersonAverageDistance =[]
 sumd=0
 sumc=0
 noface=[]
-for i in range (406,409):
+for i in range (500):
         count=0
         psumd=0
         for ii in range (i*5,(i+1)*5-1):
@@ -60,7 +60,8 @@ for i in range (406,409):
            noface.append(i)
            continue
         print('第%d人的平均欧式距离为:%f' %(i,psumd/float(count)))
-        print("==============")
+        print("========================================")
+        print("")
         samePersonAverageDistance.append(psumd/float(count))
 print('500人,每人五张照片之间欧式距离平均值为%f:' %(sumd/sumc))
 print("同一人的五张照片之间的欧式距离的平均值的数据如下:")
