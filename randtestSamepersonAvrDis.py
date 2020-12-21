@@ -27,11 +27,13 @@ for i in range (500):
     path = os.path.join(dirname, dir)
 
     list_of_files.extend(glob.glob(path+'*.bmp'))
-
+samePersonTopDistanceList =[]
 samePersonAverageDistance =[]
+maxDistance=0.41
 sumd=0
 sumc=0
 noface=[]
+
 for i in range (500):
         count=0
         psumd=0
@@ -51,6 +53,9 @@ for i in range (500):
                    else:
                       dis =embedding_distance(test_face_encoding1, test_face_encoding2)
                       print('第%d人的编号为%d的照片和编号为%d的照片的欧式距离 = %f '%(i,ii,iii,dis))
+                      if maxDistance<=dis:
+                        maxDistance=dis
+                        samePersonTopDistanceList.append(dis)
                       psumd+=dis
                       count+=1
                       sumd+=dis
@@ -64,9 +69,16 @@ for i in range (500):
         print("")
         samePersonAverageDistance.append(psumd/float(count))
 print('500人,每人五张照片之间欧式距离平均值为%f:' %(sumd/sumc))
+print("")
 print("同一人的五张照片之间的欧式距离的平均值的数据如下:")
 print(samePersonAverageDistance)
-print('其中第',noface,'人的照片无法识别出人脸')
+print("")
+if len(samePersonTopDistanceList)!=0:
+  print('其中欧式距离大于0.41的总计%d组情况,欧式距离为:'%len(samePersonTopDistanceList))
+  print(samePersonTopDistanceList)
+print("")
+if len(noface)!=0:
+  print('其中第',noface,'人的照片无法识别出人脸')
 
 
 
