@@ -52,21 +52,18 @@ for i in range (500):
 #        print("list_of_files ",j," :",list_of_files[j])
 for ii in range (5):
     try:
-        print("**********0")
-        i=random.randint(0,25)
-        print("**********",i)
+        i=random.randint(0,2500)
         arr1 = face_recognition.load_image_file(list_of_files[i])
         test_face_encoding1  = face_recognition.face_encodings(arr1)[0]
-        print("**********1")
     except Exception:
         continue
     else:
         for jj in range (5):
             try:
                 j=random.randint(0,2500)
+                print("**********j",j)
                 arr3 = face_recognition.load_image_file(list_of_files[j])
                 test_face_encoding2  = face_recognition.face_encodings(arr3)[0]
-                print("**********2")
             except Exception:
                 print(Exception)
                 continue
