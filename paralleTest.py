@@ -5,14 +5,8 @@ import os
 import glob
 import random
 import psutil
-
-#data = [[i for i in range(j*42,(j+1)*42)]for j in range(12)]
 data = [[i for i in range(0,22)],[i for i in range(22,44)],[i for i in range(44,67)],[i for i in range(67,91)],[i for i in range(91,117)],[i for i in range(117,145)],[i for i in range(145,175)],[i for i in range(175,208)],[i for i in range(208,246)],[i for i in range(246,290)],[i for i in range(290,347)],[i for i in range(347,499)]]
-
-# print(data)
-# print("data lengths: %d"%(len(data)))
 results=[]
-
 dirname = os.path.dirname(__file__)
 i=0
 j=0
@@ -28,8 +22,6 @@ for i in range (500):
         dir=str(i)+'/';
      path = os.path.join(dirname, dir)
      list_of_files.extend(glob.glob(path+'*.bmp'))
-
-#print(len(list_of_files))
 
 def embedding_distance(feature_1, feature_2):
        dist = np.linalg.norm(feature_1 - feature_2)
@@ -97,13 +89,9 @@ def collect_result(dises):
        global results
        results+=dises
 
-
 print("一共有%d核."%(mp.cpu_count()))
 if __name__ == '__main__':
   pool = mp.Pool(mp.cpu_count())
-
-  #for index in range (499):
-    #pool.apply_async(distanceOfdifPerson, args=(index), callback=collect_result)
   results = pool.map(distanceOfdifPerson, [index for index in data])
   print(len(results))
   print(results)
