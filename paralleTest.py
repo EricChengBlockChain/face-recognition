@@ -9,8 +9,8 @@ import psutil
 #data = [[i for i in range(j*42,(j+1)*42)]for j in range(12)]
 data = [[i for i in range(0,22)],[i for i in range(22,44)],[i for i in range(44,67)],[i for i in range(67,91)],[i for i in range(91,117)],[i for i in range(117,145)],[i for i in range(145,175)],[i for i in range(175,208)],[i for i in range(208,246)],[i for i in range(246,290)],[i for i in range(290,347)],[i for i in range(347,499)]]
 
-print(data)
-print("data lengths: %d"%(len(data)))
+# print(data)
+# print("data lengths: %d"%(len(data)))
 results=[]
 
 dirname = os.path.dirname(__file__)
@@ -29,7 +29,7 @@ for i in range (500):
      path = os.path.join(dirname, dir)
      list_of_files.extend(glob.glob(path+'*.bmp'))
 
-print(len(list_of_files))
+#print(len(list_of_files))
 
 def embedding_distance(feature_1, feature_2):
        dist = np.linalg.norm(feature_1 - feature_2)
@@ -62,20 +62,15 @@ def proceId(id):
       return 12,float(id-347)/153
 
 def distanceOfdifPerson(index):
-      print("*******************")
-      #print("index====",index)
       dises=[]
-      # index = np.array(index)
       for k in index:
           pidd,percentage = proceId(k)
-          #print("\n目前是第%d进程开始处理start\n"%(1+k/42))
           print("\n\n目前是第%d进程,已经完成了%f\n\n"%(pidd,percentage))
           if k<499:
            i=k
            try:
                arr1 = face_recognition.load_image_file(list_of_files[random.randint(i*5,(i+1)*5-1)])
                test_face_encoding1  = face_recognition.face_encodings(arr1)[0]
-               print("\n目前是第%d进程正在处理中.....\n"%(pidd))
            except Exception:
                continue
            else:
@@ -87,8 +82,12 @@ def distanceOfdifPerson(index):
                        continue
                    else:
                        dis =embedding_distance(test_face_encoding1, test_face_encoding2)
-                       print("\n目前是第%d进程正在处理中.............\n"%(pidd))
-                       #print("%d\t and %d's \tdistance is\t %f"%(i,j,dis))
+                       # if j%50==0:
+                       pidd,percentage = proceId(i)
+                       if i==0:
+                         print("进程%d\t处理:第0\t人和第",j,"\t人的欧式距离为: %f"%(pidd,dis))
+                       else:
+                         print("进程%d\t处理:第%d\t人和第%d\t人的欧式距离为: %f"%(pidd,i,j,dis))
                        dises.append(dis)
       print("\n第%d进程结束!!!!!!!!\n"%(pidd))
       return dises
@@ -101,15 +100,19 @@ def collect_result(dises):
 
 print("一共有%d核."%(mp.cpu_count()))
 if __name__ == '__main__':
-  pool = mp.Pool(12)
+  pool = mp.Pool(mp.cpu_count())
 
   #for index in range (499):
     #pool.apply_async(distanceOfdifPerson, args=(index), callback=collect_result)
   results = pool.map(distanceOfdifPerson, [index for index in data])
-  pool.close()
-  pool.join()
   print(len(results))
   print(results)
+  tops = results.sort()
+  print("不同人之间的欧式距离最小的50个值为: ",tops[:50])
+  avrdis = float(sum(results))/float(124750)
+  print("不同人之间的平均欧式距离为: ",avrdis)
+  pool.close()
+  pool.join()
 
 
 
