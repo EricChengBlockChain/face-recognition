@@ -5,8 +5,12 @@ import os
 import glob
 import random
 import psutil
+
+print("一共有%d核."%(mp.cpu_count()))
 data = [[i for i in range(0,22)],[i for i in range(22,44)],[i for i in range(44,67)],[i for i in range(67,91)],[i for i in range(91,117)],[i for i in range(117,145)],[i for i in range(145,175)],[i for i in range(175,208)],[i for i in range(208,246)],[i for i in range(246,290)],[i for i in range(290,347)],[i for i in range(347,499)]]
+
 results=[]
+
 dirname = os.path.dirname(__file__)
 i=0
 j=0
@@ -22,6 +26,8 @@ for i in range (500):
         dir=str(i)+'/';
      path = os.path.join(dirname, dir)
      list_of_files.extend(glob.glob(path+'*.bmp'))
+
+
 
 def embedding_distance(feature_1, feature_2):
        dist = np.linalg.norm(feature_1 - feature_2)
@@ -57,7 +63,7 @@ def distanceOfdifPerson(index):
       dises=[]
       for k in index:
           pidd,percentage = proceId(k)
-          print("\n\n目前是第%d进程,已经完成了%f\n\n"%(pidd,percentage))
+          print("\n\n第",pidd,"进程,已经完成了",percentage,"\n\n")
           if k<499:
            i=k
            try:
@@ -76,28 +82,22 @@ def distanceOfdifPerson(index):
                        dis =embedding_distance(test_face_encoding1, test_face_encoding2)
                        # if j%50==0:
                        pidd,percentage = proceId(i)
-                       if i==0:
-                         print("进程%d\t处理:第0\t人和第",j,"\t人的欧式距离为: %f"%(pidd,dis))
-                       else:
-                         print("进程%d\t处理:第%d\t人和第%d\t人的欧式距离为: %f"%(pidd,i,j,dis))
+                       print("进程",pidd,"\t处理:第",i,"\t人和第%d\t人的欧式距离为: %f"%(j,dis))
                        dises.append(dis)
       print("\n第%d进程结束!!!!!!!!\n"%(pidd))
       return dises
 
-def collect_result(dises):
-       print("dises: ",dises)
-       global results
-       results+=dises
-
-print("一共有%d核."%(mp.cpu_count()))
 if __name__ == '__main__':
   pool = mp.Pool(mp.cpu_count())
   results = pool.map(distanceOfdifPerson, [index for index in data])
   print(len(results))
-  print(results)
+  print("tops = results.sort()")
   tops = results.sort()
-  print("不同人之间的欧式距离最小的50个值为: ",tops[:50])
+  print("print(results[:50])")
+  print(results[:50])
+  print("avrdis = float(sum(results))/float(124750)")
   avrdis = float(sum(results))/float(124750)
+  print("print(不同人之间的平均欧式距离为: ,avrdis)")
   print("不同人之间的平均欧式距离为: ",avrdis)
   pool.close()
   pool.join()
