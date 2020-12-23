@@ -99,6 +99,8 @@ if __name__ == '__main__':
   print("avrdis = float(sum(results))/float(124750)")
   avrdis = float(sum(results))/float(124750)
   print("print(不同人之间的平均欧式距离为: ,avrdis)")
+# avrdis = float(sum(results))/float(124750)
+# TypeError: unsupported operand type(s) for +: 'int' and 'list'
   print("不同人之间的平均欧式距离为: ",avrdis)
   pool.close()
   pool.join()
