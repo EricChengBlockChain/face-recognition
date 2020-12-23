@@ -94,9 +94,8 @@ if __name__ == '__main__':
   results = pool.map(distanceOfdifPerson, [index for index in data])
   print(len(results))
   print("tops = results.sort()")#程序跑太久,做点记号,方便后面查看
-  tops = results.sort()
-  print("print(results[:50])")
-  print(results[:50])
+  print("print(results)")
+  print(results)
   print("avrdis = float(sum(results))/float(124750)")
   avrdis = float(sum(results))/float(124750)
   print("print(不同人之间的平均欧式距离为: ,avrdis)")
