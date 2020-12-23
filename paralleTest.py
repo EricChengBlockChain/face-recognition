@@ -7,6 +7,7 @@ import random
 import psutil
 
 print("一共有%d核."%(mp.cpu_count()))
+#经过草稿计算,如下分配,可以较为均匀的将计算量分配到12个核中完成
 data = [[i for i in range(0,22)],[i for i in range(22,44)],[i for i in range(44,67)],[i for i in range(67,91)],[i for i in range(91,117)],[i for i in range(117,145)],[i for i in range(145,175)],[i for i in range(175,208)],[i for i in range(208,246)],[i for i in range(246,290)],[i for i in range(290,347)],[i for i in range(347,499)]]
 
 results=[]
@@ -33,6 +34,7 @@ def embedding_distance(feature_1, feature_2):
        dist = np.linalg.norm(feature_1 - feature_2)
        return dist
 
+#时间较长,打印个进度看看
 def proceId(id):
      if 0<=id<22:
       return 1,float(id-0)/22
@@ -63,7 +65,7 @@ def distanceOfdifPerson(index):
       dises=[]
       for k in index:
           pidd,percentage = proceId(k)
-          print("\n\n第",pidd,"进程,已经完成了",percentage,"\n\n")
+          print("\n\n第",pidd,"进程,已经完成了",percentage,"\n\n")#%d 在值为0,1时不灵的,所以改写为这样
           if k<499:
            i=k
            try:
@@ -82,7 +84,7 @@ def distanceOfdifPerson(index):
                        dis =embedding_distance(test_face_encoding1, test_face_encoding2)
                        # if j%50==0:
                        pidd,percentage = proceId(i)
-                       print("进程",pidd,"\t处理:第",i,"\t人和第%d\t人的欧式距离为: %f"%(j,dis))
+                       print("进程",pidd,"\t处理:第",i,"\t人和第%d\t人的欧式距离为: %f"%(j,dis))#%d 在值为0,1时不灵的,所以改写为这样
                        dises.append(dis)
       print("\n第%d进程结束!!!!!!!!\n"%(pidd))
       return dises
@@ -91,7 +93,7 @@ if __name__ == '__main__':
   pool = mp.Pool(mp.cpu_count())
   results = pool.map(distanceOfdifPerson, [index for index in data])
   print(len(results))
-  print("tops = results.sort()")
+  print("tops = results.sort()")#程序跑太久,做点记号,方便后面查看
   tops = results.sort()
   print("print(results[:50])")
   print(results[:50])
