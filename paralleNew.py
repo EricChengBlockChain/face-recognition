@@ -80,9 +80,8 @@ def distanceOfdifPerson(index):
                        continue
                    else:
                        dis =embedding_distance(test_face_encoding1, test_face_encoding2)
-                       # if j%50==0:
                        pidd,percentage = proceId(i)
-                       print("进程",pidd,"\t处理:第",i,"\t人和第%d\t人的欧式距离为: %f"%(j,dis))
+                       print("进程",pidd,"正在处理:第",i,"人和第%d人的欧式距离: %f"%(j,dis))
                        dises.append(dis)
       print("\n第%d进程结束!!!!!!!!\n"%(pidd))
       return dises
