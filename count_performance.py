@@ -12,9 +12,7 @@ def getFileSize(filePath, size=0):
     for root, dirs, files in os.walk(filePath):
         for f in files:
             size += os.path.getsize(os.path.join(root, f))
-            #print(f)
     return size
-
 
 counts=0
 fsize=0
@@ -30,7 +28,6 @@ for i in range (98):
         dir = '0'+str(i)+'/'
     path = os.path.join(dirname, dir)
     sizes = getFileSize(path,size)
-    #print(path," 目录中的文件大小为: ",sizes)
     fsize += sizes
     list_of_files.extend(glob.glob(path+'*.bmp'))
 
@@ -50,8 +47,33 @@ cpu_time_end = time.process_time()
 times = time_end - time_start
 times_cpu = cpu_time_end - cpu_time_start
 print("总共包含照片数量为: ",ii,"张")
-print("照片总大小为: ",fsize/(1024*1024),"MB")
+print("照片大小为: ",fsize/(ii*1024*1024),"MB")
 print("cpu执行加载以及提取照片特征执行总时间为: ",times_cpu," s")
 s = fsize/(1024*1024*1024*times_cpu)
-print("总照片大小(GB)/cpu加载以及提取所有照片特征执行总时间(s): ",s,"GB/S")
+print("每秒可以加载并提取",ii/times_cpu,"幅图片的人脸特征")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
