@@ -1,0 +1,12 @@
+#! /bin/bash
+for i in `seq -w 100 419`
+do 
+	mkdir $i
+	cd $i
+	touch ${i}_0.bmp
+	touch ${i}_1.bmp
+	touch ${i}_2.bmp
+	touch ${i}_3.bmp
+	touch ${i}_4.bmp
+	cd ..
+done
